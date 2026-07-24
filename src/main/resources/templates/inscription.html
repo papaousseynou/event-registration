@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription à l'événement</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>Inscription à l'événement</h1>
+            <p>Remplissez le formulaire ci-dessous pour vous inscrire.</p>
+        </header>
+
+        <form id="inscription-form" class="form-card">
+            <div class="form-group">
+                <label for="prenom">Prénom *</label>
+                <input type="text" id="prenom" name="prenom" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nom">Nom *</label>
+                <input type="text" id="nom" name="nom" required>
+            </div>
+
+            <div class="form-group">
+                <label for="telephone">Numéro de téléphone *</label>
+                <input type="tel" id="telephone" name="telephone" placeholder="06 12 34 56 78" required>
+            </div>
+
+            <div class="form-group">
+                <label for="dateNaissance">Date de naissance *</label>
+                <input type="date" id="dateNaissance" name="dateNaissance" required>
+            </div>
+
+            <div class="form-group">
+                <label for="sexe">Sexe *</label>
+                <select id="sexe" name="sexe" required>
+                    <option value="">-- Sélectionner --</option>
+                    <option value="Homme">Homme</option>
+                    <option value="Femme">Femme</option>
+                    <option value="Autre">Autre</option>
+                </select>
+            </div>
+
+            <div id="message" class="message hidden"></div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">S'inscrire</button>
+                <a href="/liste" class="btn btn-secondary">Voir les inscriptions</a>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('inscription-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const messageEl = document.getElementById('message');
+            messageEl.className = 'message hidden';
+
+            const payload = {
+                prenom: document.getElementById('prenom').value.trim(),
+                nom: document.getElementById('nom').value.trim(),
+                telephone: document.getElementById('telephone').value.trim(),
+                dateNaissance: document.getElementById('dateNaissance').value,
+                sexe: document.getElementById('sexe').value
+            };
+
+            try {
+                const response = await fetch('/api/inscriptions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    messageEl.textContent = 'Inscription enregistrée avec succès !';
+                    messageEl.className = 'message success';
+                    event.target.reset();
+                } else {
+                    const error = await response.json();
+                    const details = error.errors
+                        ? Object.values(error.errors).join(', ')
+                        : (error.message || 'Erreur lors de l\'inscription');
+                    messageEl.textContent = details;
+                    messageEl.className = 'message error';
+                }
+            } catch (err) {
+                messageEl.textContent = 'Impossible de contacter le serveur.';
+                messageEl.className = 'message error';
+            }
+        });
+    </script>
+</body>
+</html>

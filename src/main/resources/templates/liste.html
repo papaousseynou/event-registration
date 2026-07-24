@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des inscriptions</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>Liste des inscriptions</h1>
+            <p th:text="${#lists.size(inscriptions)} + ' personne(s) inscrite(s)'">0 personne(s) inscrite(s)</p>
+        </header>
+
+        <div class="actions">
+            <a href="/" class="btn btn-primary">Nouvelle inscription</a>
+        </div>
+
+        <div th:if="${#lists.isEmpty(inscriptions)}" class="empty-state">
+            <p>Aucune inscription pour le moment.</p>
+        </div>
+
+        <table th:unless="${#lists.isEmpty(inscriptions)}" class="table">
+            <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Téléphone</th>
+                    <th>Date de naissance</th>
+                    <th>Sexe</th>
+                    <th>Date d'inscription</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="inscription : ${inscriptions}">
+                    <td th:text="${inscription.prenom}">Prénom</td>
+                    <td th:text="${inscription.nom}">Nom</td>
+                    <td th:text="${inscription.telephone}">Téléphone</td>
+                    <td th:text="${#temporals.format(inscription.dateNaissance, 'dd/MM/yyyy')}">01/01/1990</td>
+                    <td th:text="${inscription.sexe}">Sexe</td>
+                    <td th:text="${#temporals.format(inscription.dateInscription, 'dd/MM/yyyy HH:mm')}">01/01/2026</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

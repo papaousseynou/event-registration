@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS inscription (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    prenom VARCHAR(100) NOT NULL,
+    nom VARCHAR(100) NOT NULL,
+    telephone VARCHAR(20) NOT NULL,
+    date_naissance DATE NOT NULL,
+    sexe VARCHAR(10) NOT NULL,
+    date_inscription TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
