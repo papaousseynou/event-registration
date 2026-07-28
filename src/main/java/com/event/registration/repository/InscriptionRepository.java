@@ -8,6 +8,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,6 +24,8 @@ public class InscriptionRepository {
             rs.getString("telephone"),
             rs.getDate("date_naissance").toLocalDate(),
             rs.getString("sexe"),
+            rs.getLong("evenement_id"),
+            rs.getString("evenement_nom"),
             rs.getTimestamp("date_inscription").toLocalDateTime()
     );
 
@@ -32,8 +35,8 @@ public class InscriptionRepository {
 
     public Inscription save(Inscription inscription) {
         String sql = """
-                INSERT INTO inscription (prenom, nom, telephone, date_naissance, sexe)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO inscription (prenom, nom, telephone, date_naissance, sexe, evenement_id)
+                VALUES (?, ?, ?, ?, ?, ?)
                 """;
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -45,6 +48,7 @@ public class InscriptionRepository {
             ps.setString(3, inscription.getTelephone());
             ps.setDate(4, java.sql.Date.valueOf(inscription.getDateNaissance()));
             ps.setString(5, inscription.getSexe());
+            ps.setLong(6, inscription.getEvenementId());
             return ps;
         }, keyHolder);
 
@@ -53,12 +57,34 @@ public class InscriptionRepository {
     }
 
     public Inscription findById(Long id) {
-        String sql = "SELECT * FROM inscription WHERE id = ?";
+        String sql = """
+                SELECT i.*, e.nom AS evenement_nom
+                FROM inscription i
+                JOIN evenement e ON i.evenement_id = e.id
+                WHERE i.id = ?
+                """;
         return jdbcTemplate.queryForObject(sql, ROW_MAPPER, id);
     }
 
     public List<Inscription> findAll() {
-        String sql = "SELECT * FROM inscription ORDER BY date_inscription DESC";
-        return jdbcTemplate.query(sql, ROW_MAPPER);
+        return findByEvenementId(null);
+    }
+
+    public List<Inscription> findByEvenementId(Long evenementId) {
+        String sql = """
+                SELECT i.*, e.nom AS evenement_nom
+                FROM inscription i
+                JOIN evenement e ON i.evenement_id = e.id
+                """;
+        List<Object> params = new ArrayList<>();
+
+        if (evenementId != null) {
+            sql += " WHERE i.evenement_id = ?";
+            params.add(evenementId);
+        }
+
+        sql += " ORDER BY i.date_inscription DESC";
+
+        return jdbcTemplate.query(sql, ROW_MAPPER, params.toArray());
     }
 }

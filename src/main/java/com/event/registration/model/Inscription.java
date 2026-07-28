@@ -29,19 +29,27 @@ public class Inscription {
     @NotBlank(message = "Le sexe est obligatoire")
     private String sexe;
 
+    @NotNull(message = "L'événement est obligatoire")
+    private Long evenementId;
+
+    private String evenementNom;
+
     private LocalDateTime dateInscription;
 
     public Inscription() {
     }
 
     public Inscription(Long id, String prenom, String nom, String telephone,
-                       LocalDate dateNaissance, String sexe, LocalDateTime dateInscription) {
+                       LocalDate dateNaissance, String sexe, Long evenementId,
+                       String evenementNom, LocalDateTime dateInscription) {
         this.id = id;
         this.prenom = prenom;
         this.nom = nom;
         this.telephone = telephone;
         this.dateNaissance = dateNaissance;
         this.sexe = sexe;
+        this.evenementId = evenementId;
+        this.evenementNom = evenementNom;
         this.dateInscription = dateInscription;
     }
 
@@ -91,6 +99,22 @@ public class Inscription {
 
     public void setSexe(String sexe) {
         this.sexe = sexe;
+    }
+
+    public Long getEvenementId() {
+        return evenementId;
+    }
+
+    public void setEvenementId(Long evenementId) {
+        this.evenementId = evenementId;
+    }
+
+    public String getEvenementNom() {
+        return evenementNom;
+    }
+
+    public void setEvenementNom(String evenementNom) {
+        this.evenementNom = evenementNom;
     }
 
     public LocalDateTime getDateInscription() {

@@ -15,6 +15,18 @@
 
         <form id="inscription-form" class="form-card">
             <div class="form-group">
+                <label for="evenementId">Événement *</label>
+                <select id="evenementId" name="evenementId" required>
+                    <option value="">-- Choisir un événement --</option>
+                    <option th:each="evenement : ${evenements}"
+                            th:value="${evenement.id}"
+                            th:text="${evenement.nom + ' (' + #temporals.format(evenement.dateEvenement, 'dd/MM/yyyy') + ' - ' + evenement.lieu + ')'}">
+                        Événement
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="prenom">Prénom *</label>
                 <input type="text" id="prenom" name="prenom" required>
             </div>
@@ -65,7 +77,8 @@
                 nom: document.getElementById('nom').value.trim(),
                 telephone: document.getElementById('telephone').value.trim(),
                 dateNaissance: document.getElementById('dateNaissance').value,
-                sexe: document.getElementById('sexe').value
+                sexe: document.getElementById('sexe').value,
+                evenementId: Number(document.getElementById('evenementId').value)
             };
 
             try {
