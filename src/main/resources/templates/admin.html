@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="container">
+        <header>
+            <h1>Administration</h1>
+            <p>Espace réservé aux administrateurs.</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-value" th:text="${nombreEvenements}">0</span>
+                <span class="stat-label">Événements</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" th:text="${nombreInscriptions}">0</span>
+                <span class="stat-label">Inscriptions</span>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a href="/liste" class="btn btn-primary">Voir les inscriptions</a>
+            <a href="/h2-console" class="btn btn-secondary" target="_blank">Console H2</a>
+        </div>
+    </main>
+</body>
+</html>

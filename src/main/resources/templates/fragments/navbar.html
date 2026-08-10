@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Fragment navbar</title>
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar">
+    <div class="navbar-brand">Event Registration</div>
+    <div class="navbar-links">
+        <a href="/">Inscription</a>
+        <a href="/liste" sec:authorize="hasRole('ADMIN')">Liste</a>
+        <a href="/admin" sec:authorize="hasRole('ADMIN')">Administration</a>
+    </div>
+    <div class="navbar-user">
+        <span sec:authentication="name">utilisateur</span>
+        <span class="role-badge" sec:authorize="hasRole('ADMIN')">Admin</span>
+        <span class="role-badge role-user" sec:authorize="hasRole('USER')">Utilisateur</span>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="btn btn-secondary btn-sm">Déconnexion</button>
+        </form>
+    </div>
+</nav>
+</body>
+</html>

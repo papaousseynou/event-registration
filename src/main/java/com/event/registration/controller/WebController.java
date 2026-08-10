@@ -31,4 +31,11 @@ public class WebController {
         model.addAttribute("inscriptions", inscriptionService.getInscriptionsByEvenement(evenementId));
         return "liste";
     }
+
+    @GetMapping("/admin")
+    public String admin(Model model) {
+        model.addAttribute("nombreInscriptions", inscriptionService.getAllInscriptions().size());
+        model.addAttribute("nombreEvenements", evenementService.getAllEvenements().size());
+        return "admin";
+    }
 }

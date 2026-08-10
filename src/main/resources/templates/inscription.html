@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,8 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
     <main class="container">
         <header>
             <h1>Inscription à l'événement</h1>
@@ -60,7 +63,7 @@
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">S'inscrire</button>
-                <a href="/liste" class="btn btn-secondary">Voir les inscriptions</a>
+                <a href="/liste" class="btn btn-secondary" sec:authorize="hasRole('ADMIN')">Voir les inscriptions</a>
             </div>
         </form>
     </main>
