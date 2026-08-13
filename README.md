@@ -62,3 +62,8 @@ Base **H2 en mémoire** (re-créée à chaque démarrage), initialisée via :
 - Spring JDBC
 - Validation Bean
 - H2 Database
+
+- Captures de l'application
+
+- <img width="1865" height="982" alt="Capture d’écran 2026-08-13 à 19 08 59" src="https://github.com/user-attachments/assets/e71960ea-ae0d-437f-9d32-701aa9bca043" />
+
