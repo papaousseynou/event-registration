@@ -71,3 +71,7 @@ Base **H2 en mémoire** (re-créée à chaque démarrage), initialisée via :
 
 <img width="1865" height="982" alt="Capture d’écran 2026-08-13 à 19 04 08" src="https://github.com/user-attachments/assets/1b2e415c-3413-4b3b-b503-aa2a2cfee49a" />
 
+<img width="1865" height="982" alt="Capture d’écran 2026-08-13 à 19 05 03" src="https://github.com/user-attachments/assets/f94a37de-6e73-4780-bc68-ed7e2539f399" />
+
+<img width="1865" height="982" alt="Capture d’écran 2026-08-13 à 19 04 38" src="https://github.com/user-attachments/assets/a708b1e1-ec05-46e5-8ec7-c9dafd80ccc6" />
+
