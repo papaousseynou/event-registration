@@ -65,5 +65,9 @@ Base **H2 en mémoire** (re-créée à chaque démarrage), initialisée via :
 
 - Captures de l'application
 
-- <img width="1865" height="982" alt="Capture d’écran 2026-08-13 à 19 08 59" src="https://github.com/user-attachments/assets/e71960ea-ae0d-437f-9d32-701aa9bca043" />
+ <img width="1865" height="982" alt="Capture d’écran 2026-08-13 à 19 08 59" src="https://github.com/user-attachments/assets/e71960ea-ae0d-437f-9d32-701aa9bca043" />
+
+<img width="1865" height="982" alt="Capture d’écran 2026-08-13 à 19 02 19" src="https://github.com/user-attachments/assets/ecd50280-6b78-4106-9e00-f0f6a8e840e8" />
+
+<img width="1865" height="982" alt="Capture d’écran 2026-08-13 à 19 04 08" src="https://github.com/user-attachments/assets/1b2e415c-3413-4b3b-b503-aa2a2cfee49a" />
 
