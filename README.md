@@ -102,4 +102,17 @@ Base **H2 en mémoire** (re-créée à chaque démarrage), initialisée via :
 
 <img width="1865" height="982" alt="Capture d’écran 2026-08-13 à 19 05 03" src="https://github.com/user-attachments/assets/f94a37de-6e73-4780-bc68-ed7e2539f399" />
 
+- Captures keycloak config
+
+  <img width="1317" height="771" alt="1" src="https://github.com/user-attachments/assets/370e4273-86fa-440b-9080-6c1a254027e8" />
+  
+  <img width="1317" height="771" alt="2" src="https://github.com/user-attachments/assets/7ccf8552-0584-49af-adcf-cd8f1f12f9c5" />
+
+  <img width="1317" height="771" alt="3" src="https://github.com/user-attachments/assets/5f5948a6-a595-4a13-863b-58470796b39c" />
+
+  <img width="1317" height="895" alt="4" src="https://github.com/user-attachments/assets/71bd94c3-8608-436e-b365-af3a89f0e234" />
+
+
+
+
 
