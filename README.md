@@ -6,6 +6,35 @@ Application d'inscription à un événement réalisée avec **Spring Boot**.
 
 - **Java 21**
 - **Maven 3.9+** (ou utilisez le wrapper Maven s'il est présent dans le projet)
+- **Keycloak** accessible sur <http://localhost:8180> (voir configuration ci-dessous)
+
+## Configuration Keycloak
+
+1. Démarrez Keycloak (ex. avec Docker) :
+   ```bash
+   docker run -d --name keycloak -p 8180:8080 \
+     -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin \
+     quay.io/keycloak/keycloak:26.7.1 start-dev
+   ```
+2. Ouvrez la console admin <http://localhost:8180> (admin / admin) et créez :
+   - Deux **rôles realm** : `admin` et `user`
+   - Un **client** `event-registration` :
+     - Client type : `Confidential access` (Client authentication : On)
+     - Standard flow (Authorization code)
+     - Valid redirect URIs : `http://localhost:8085/login/oauth2/code/keycloak`
+     - Valid post logout redirect URIs : `http://localhost:8085`
+     - Web origins : `http://localhost:8085`
+   - Deux **utilisateurs** avec un mot de passe :
+     - `najad` → rôle `admin`
+     - `souley` → rôle `user`
+3. Copiez le **client secret** de l'onglet *Credentials* du client et placez-le dans
+   `src/main/resources/application.properties` → `spring.security.oauth2.client.registration.keycloak.client-secret`.
+
+> Les rôles realm (`admin`/`user`) sont automatiquement mappés sur les rôles Spring Security
+> `ROLE_ADMIN`/`ROLE_USER` par `SecurityConfig`.
+>
+> ⚠️ Le realm utilisé ici est `master` (voir `issuer-uri` dans `application.properties`).
+> Pour la production, créez un realm dédié (ex. `event-realm`) et changez `issuer-uri` en conséquence.
 
 ## Lancement
 
@@ -13,28 +42,26 @@ Application d'inscription à un événement réalisée avec **Spring Boot**.
 mvn spring-boot:run
 ```
 
-L'application démarre sur le port **8085** : <http://localhost:8085>
+L'application démarre sur le port **8085** : <http://localhost:8085>.
+Une page non authentifiée redirige automatiquement vers la page de connexion Keycloak.
 
 ## Accès
 
 | URL | Description |
 | --- | --- |
 | `/` | Formulaire d'inscription |
-| `/login` | Page de connexion |
 | `/admin` | Tableau de bord admin (rôle ADMIN) |
 | `/liste` | Liste des inscriptions (rôle ADMIN) |
 | `/h2-console` | Console de la base H2 |
 
 ### Comptes de démonstration
 
-Deux comptes sont créés au démarrage (`data.sql`) avec des mots de passe **chiffrés en BCrypt** dans la base :
-
 | Utilisateur | Rôle |
 | ----------- | ---- |
-| `Souleymane` | USER |
-| `Najad` | ADMIN |
+| `souley` | USER |
+| `najad` | ADMIN |
 
-> Les mots de passe en clair ne sont pas fournis dans le dépôt. Régénérez les hachages avec `BCryptPasswordEncoder` et mettez-les à jour dans `src/main/resources/data.sql`.
+> Ces comptes sont gérés par Keycloak (realm `master`), plus dans la base H2.
 
 ## API REST
 
@@ -58,7 +85,7 @@ Base **H2 en mémoire** (re-créée à chaque démarrage), initialisée via :
 
 - Spring Boot 3.4.1
 - Spring MVC + Thymeleaf
-- Spring Security (authentification JDBC, BCrypt)
+- Spring Security (authentification OAuth2/OIDC via Keycloak)
 - Spring JDBC
 - Validation Bean
 - H2 Database
